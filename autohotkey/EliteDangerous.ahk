@@ -13,6 +13,13 @@ global Sleeptime := SleepMinutes * 60000 ; 31 = Minutes  60000 is Milliseconds
 ;
 ; Change this to whatever activation key you want
 ; Press the key once to start the Merit Buying, again to stop it.
+; =============================================
+; 
+; Be at a Station on the Contacts Screen with no Contact highlighted
+; and press the key to start the Macro
+; This will run until you hit the Macro start key again.
+; By default it will buy 50 merits every 31 minutes  EVEN if your cargo is full it will try
+
 ; Right Control key to start picking up Power Play Merits
 RControl::
 
