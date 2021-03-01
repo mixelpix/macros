@@ -45,6 +45,8 @@ RControl::
     BuyMerits := True
     Loop
     {
+        ; Activate Elite Dangerous Window
+        WinActivate ahk_class FrontierDevelopmentsAppWinClass
         ; Let's Find out how much Cargo we have:
         StartingCargoCount := GetCargo()
         Tooltip, Buying Merits Current Cargo %StartingCargoCount%
