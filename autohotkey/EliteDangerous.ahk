@@ -36,7 +36,7 @@ RControl::
     #MaxThreadsPerHotkey, 1
     if BuyMerits                        ; This means an underlying thread is already running the loop below
     {
-        Tooltip, Stop Buying Merits     ;  Set tooltip to say we're stopping Merit buying
+        Tooltip, Done Buying Merits     ;  Set tooltip to say we're stopping Merit buying
         BuyMerits := False              ; Signal the thread's loop to stop
         return                          ; End this thread so we can go back into hotkey mode
     }
@@ -47,7 +47,7 @@ RControl::
     {
         ; Let's Find out how much Cargo we have:
         StartingCargoCount := GetCargo()
-        Tooltip, Buying Merits %StartingCargoCount%
+        Tooltip, Buying Merits Current Cargo %StartingCargoCount%
         Send {Right}                    ; right to Contacts
         Send {Down}                     ; down to Power Play
         Send {Space}                    ; Seelct the Power Play Contact
