@@ -22,21 +22,41 @@ global Sleeptime := SleepMinutes * 60000 ; 31 = Minutes  60000 is Milliseconds
 ; This will run until you hit the Macro start key again.
 ; By default it will buy 50 merits every 31 minutes  EVEN if your cargo is full it will try
 
+LControl & q::
+    ; Macro for Heelies
+    #MaxThreadsPerHotkey, 1
+    if Healies
+    {
+        TrayTip, Farming, Done Healies, 10
+        Healies := False
+        Return 
+    }
+
+    Healies := True
+    TrayTip, Farming, Starting Healies Farming, 10
+    Loop 
+    {
+        Click, Down Right   ; Activate Turrets
+        Click, Down Left    ; Active Healing Beam
+        Sleep, 5000
+    }
+return
+
 ;PageUp Macro to Relog Elite Dangerous 
 LControl & a::
-Traytip, Relog, Session Flipping(Solo), 10
-; Activate Elite Dangerous Window
-WinActivate ahk_class FrontierDevelopmentsAppWinClass
-Send {Esc}      ; Goto Menu
-Send {Up}       ; Up to loop down to Exit
-Send {Space}    ; Select Exit
-Send {Space}    ; Select Exit to Main Menu
-Sleep, 6000     ; Wait for the Mennu to load
-Send {Space}    ; Contine
-Sleep, 1000     ; Let the page load 
-Send {Right}    ; Move to Private Group
-Send {Right}    ; Move to Solo
-Send {Space}    ; Select Solo Mode
+    Traytip, Relog, Session Flipping(Solo), 10
+    ; Activate Elite Dangerous Window
+    WinActivate ahk_class FrontierDevelopmentsAppWinClass
+    Send {Esc}      ; Goto Menu
+    Send {Up}       ; Up to loop down to Exit
+    Send {Space}    ; Select Exit
+    Send {Space}    ; Select Exit to Main Menu
+    Sleep, 6000     ; Wait for the Mennu to load
+    Send {Space}    ; Contine
+    Sleep, 1000     ; Let the page load 
+    Send {Right}    ; Move to Private Group
+    Send {Right}    ; Move to Solo
+    Send {Space}    ; Select Solo Mode
 return
 
 ; Right Control key to start picking up Power Play Merits
