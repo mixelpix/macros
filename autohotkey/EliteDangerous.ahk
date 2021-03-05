@@ -18,9 +18,26 @@ global Sleeptime := SleepMinutes * 60000 ; 31 = Minutes  60000 is Milliseconds
 ; =============================================
 ; 
 ; Be at a Station on the Contacts Screen with no Contact highlighted
-; and press the key to start the Macro
+; and press the key to start the Macr4o
 ; This will run until you hit the Macro start key again.
 ; By default it will buy 50 merits every 31 minutes  EVEN if your cargo is full it will try
+
+;PageUp Macro to Relog Elite Dangerous 
+LControl & a::
+Traytip, Relog, Session Flipping(Solo), 10
+; Activate Elite Dangerous Window
+WinActivate ahk_class FrontierDevelopmentsAppWinClass
+Send {Esc}      ; Goto Menu
+Send {Up}       ; Up to loop down to Exit
+Send {Space}    ; Select Exit
+Send {Space}    ; Select Exit to Main Menu
+Sleep, 6000     ; Wait for the Mennu to load
+Send {Space}    ; Contine
+Sleep, 1000     ; Let the page load 
+Send {Right}    ; Move to Private Group
+Send {Right}    ; Move to Solo
+Send {Space}    ; Select Solo Mode
+return
 
 ; Right Control key to start picking up Power Play Merits
 RControl::
@@ -36,7 +53,7 @@ RControl::
     #MaxThreadsPerHotkey, 1
     if BuyMerits                        ; This means an underlying thread is already running the loop below
     {
-        Tooltip, Done Buying Merits     ;  Set tooltip to say we're stopping Merit buying
+        TrayTip, Merits, Done Buying Merits, 10     ;  Set tooltip to say we're stopping Merit buying
         BuyMerits := False              ; Signal the thread's loop to stop
         return                          ; End this thread so we can go back into hotkey mode
     }
@@ -45,9 +62,13 @@ RControl::
     BuyMerits := True
     Loop
     {
+        ; Activate Elite Dangerous Window
+        WinActivate ahk_class FrontierDevelopmentsAppWinClass
         ; Let's Find out how much Cargo we have:
         StartingCargoCount := GetCargo()
-        Tooltip, Buying Merits Current Cargo %StartingCargoCount%
+        Traytip, Merits, Buying Merits Starting Cargo %StartingCargoCount%, 10
+        Send {Left}
+        Send {Left}
         Send {Right}                    ; right to Contacts
         Send {Down}                     ; down to Power Play
         Send {Space}                    ; Seelct the Power Play Contact
@@ -60,15 +81,18 @@ RControl::
         Send {Space}                    ; Pick up the items
         Send {space}                    ; Move to previous screen
         Sleep, 1000                     ; Wait for screen delay
-        Send {left}                     ; Back to Contacts Screen
-        Send {space}                    ; Back to Contacts Page with Top Left contact Selected
-        Send {left}                     ; Back to Contacts with no contacts selected so we know where to start
+        Send {Left}                     ; Back to Contacts Screen
+        Send {Space}                    ; Back to Contacts Page with Top Left contact Selected
+        Send {Left}                     ; Back to Contacts with no contacts selected so we know where to start
         Send {Left}
+        EndingCargoCount := GetCargo()
+        Traytip, Merits, Buying Merits Ending Cargo %EndingCargoCount%, 10
+
         Sleep, %Sleeptime%              ; Wait for 31 minutes to pick up the next batch
         EndingCargoCount := GetCargo()
         if (EndingCargoCount = StartingCargoCount)
         {
-            Tooltip, Cargo Full - EXITING %EndingCargoCount% : %StartingCargoCount%            
+            Traytip, Merits, Cargo Full - EXITING %EndingCargoCount% : %StartingCargoCount%, 10          
             BuyMerits := False
             Break 
         }
@@ -85,8 +109,8 @@ RControl::
     GetCargo()
     {
         EnvGet, UserProfile, USERPROFILE
-        CargoFile = %UserProfile%\Saved Games\Frontier Developments\Elite Dangerous\CArgo.json
+        CargoFile = %UserProfile%\Saved Games\Frontier Developments\Elite Dangerous\Cargo.json
         FileReadLine, CargoLine, %CargoFile%, 1
-        Cargo := Jxon_Load( CargoLine)
+        Cargo := Jxon_Load(CargoLine)
         Return Cargo.Count 
     }
