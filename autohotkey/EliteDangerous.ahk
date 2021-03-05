@@ -28,6 +28,8 @@ LControl & q::
     if Healies
     {
         TrayTip, Farming, Done Healies, 10
+        Click, Up, Right
+        Click, Up, Left
         Healies := False
         Return 
     }
@@ -36,10 +38,14 @@ LControl & q::
     TrayTip, Farming, Starting Healies Farming, 10
     Loop 
     {
+        WinActivate, ahk_class FrontierDevelopmentsAppWinClass
         Click, Down Right   ; Activate Turrets
         Click, Down Left    ; Active Healing Beam
         Sleep, 5000
+        if not Healies
+            Break 
     }
+    Healies := False 
 return
 
 ;PageUp Macro to Relog Elite Dangerous 
