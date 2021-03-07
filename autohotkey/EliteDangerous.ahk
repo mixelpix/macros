@@ -130,6 +130,10 @@
         BuyMerits := False ; Reset in preparation for the next press of this hotkey
     return
 
+    LControl & g::
+        GetMaxCargo()
+    Return
+
     ; ==================================================================
     ; Funtions/Subroutines
     ;
@@ -149,26 +153,24 @@ GetMaxCargo()
     CargoCapacity := 0
     Loop, read, %LoadoutFile% ; Loop thru the Modules file line by line
     {
-        Loop, record, A_LoopReadLine ; Get a line
-        {
-            ifInString, record, cargorack_size8 
-                CargoCapacity = CargoCapacity + 256
-            ifInString, record, cargorack_size7 
-                CargoCapacity = CargoCapacity + 128
-            ifInString, record, cargorack_size6 
-                CargoCapacity = CargoCapacity + 64
-            ifInString, record, cargorack_size5 
-                CargoCapacity = CargoCapacity + 32
-            ifInString, record, cargorack_size4
-                CargoCapacity = CargoCapacity + 16
-            ifInString, record, cargorack_size3 
-                CargoCapacity = CargoCapacity + 8
-            ifInString, record, cargorack_size2 
-                CargoCapacity = CargoCapacity + 4
-            ifInString, record, cargorack_size1 
-                CargoCapacity = CargoCapacity + 2
-        }
+        ifInString, A_LoopReadLine, cargorack_size8 
+            CargoCapacity := CargoCapacity + 256
+        ifInString, A_LoopReadLine, cargorack_size7 
+            CargoCapacity := CargoCapacity + 128
+        ifInString, A_LoopReadLine, cargorack_size6 
+            CargoCapacity := CargoCapacity + 64
+        ifInString, A_LoopReadLine, cargorack_size5 
+            CargoCapacity := CargoCapacity + 32
+        ifInString, A_LoopReadLine, cargorack_size4
+            CargoCapacity := CargoCapacity + 16
+        ifInString, A_LoopReadLine, cargorack_size3 
+            CargoCapacity := CargoCapacity + 8
+        ifInString, A_LoopReadLine, cargorack_size2 
+            CargoCapacity := CargoCapacity + 4
+        ifInString, A_LoopReadLine, cargorack_size1 
+            CargoCapacity := CargoCapacity + 2
+        ;        }
     } 
-    TrayTip, CargoCapacity, Cargo Capacity: %CargoCapacity%
+    ;TrayTip, CargoCapacity, Cargo Capacity: %CargoCapacity%
     Return CargoCapacity 
 }
