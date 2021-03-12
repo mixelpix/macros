@@ -93,7 +93,7 @@
             ; Let's Find out how much Cargo we have:
             MaxCargo := GetMaxCargo()
             StartingCargoCount := GetCargo()
-            Traytip, Merits, Buying Merits Starting Cargo %StartingCargoCount%, 10
+            ;Traytip, Merits, Buying Merits Starting Cargo %StartingCargoCount% / %MaxCargo%, 10
             Send {Left}
             Send {Left}
             Send {Right} ; right to Contacts
@@ -112,8 +112,9 @@
             Send {Space} ; Back to Contacts Page with Top Left contact Selected
             Send {Left} ; Back to Contacts with no contacts selected so we know where to start
             Send {Left}
+            Sleep, 3000 ; Wit for Cargo.json to be updated
             EndingCargoCount := GetCargo()
-            Traytip, Merits, Buying Merits Ending Cargo %EndingCargoCount%, 10
+            Traytip, Merits, Buying Merits: Cargo %EndingCargoCount% / %MaxCargo%, 10
 
             Sleep, %Sleeptime% ; Wait for 31 minutes to pick up the next batch
             EndingCargoCount := GetCargo()
