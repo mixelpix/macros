@@ -22,6 +22,48 @@
     ; This will run until you hit the Macro start key again.
     ; By default it will buy 50 merits every 31 minutes  EVEN if your cargo is full it will try
 
+; =====================================================
+
+    LControl & P::
+        ; Macro for Low Rez Farming
+        ; SEt your primary and secondary fire keys
+        ; Assumes Turrets are on Left Mouse Click
+        ; Assumes Collector Limpet is on Secondary Fire but...
+        ; If you're Limpet controller is on Lef tMouse thaty will work too
+        #MaxThreadsPerHotkey, 1
+        if Pirating
+        {
+            TrayTip, Pirating, Done Pirating, 10
+;           Click, Up, Right
+;           Click, Up, Left
+            Pirating := False
+            Return 
+        }
+
+        Pirating := True
+        TrayTip, Pirating, Starting Pirate Farming, 10
+        Loop 
+        {
+            WinActivate, ahk_class FrontierDevelopmentsAppWinClass
+            Send {LShift Down}
+            Send {1}
+            Send {LShift Up}
+            Send {LShift Down}
+            Send {2}
+            Send {LShift Up}
+            ;Click, Down, Right ; Activate Turrets
+            ;Click, Up, Right   ; Release the damn mouse button so I can have control of my PC back
+            ;Click, Down, Left  ; Send out a Collector limpet
+            ;Click, Up, Left   ; Release the damn mouse button so I can have control of my PC back
+            Sleep, 600000
+            if not Pirating
+                Break 
+        }
+        Pirating := False 
+    return
+
+; ===================================================
+
     LControl & q::
         ; Macro for Heelies
         #MaxThreadsPerHotkey, 1
